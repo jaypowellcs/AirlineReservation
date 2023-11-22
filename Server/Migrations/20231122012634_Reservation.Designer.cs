@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Server.Models;
 
@@ -11,9 +12,11 @@ using Server.Models;
 namespace Server.Migrations
 {
     [DbContext(typeof(AirlineContext))]
-    partial class AirlineContextModelSnapshot : ModelSnapshot
+    [Migration("20231122012634_Reservation")]
+    partial class Reservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,75 +24,6 @@ namespace Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Server.Models.Airport", b =>
-                {
-                    b.Property<int>("AirportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AirportId"));
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AirportId");
-
-                    b.ToTable("Airport");
-                });
-
-            modelBuilder.Entity("Server.Models.Flight", b =>
-                {
-                    b.Property<int>("FlightId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FlightId"));
-
-                    b.Property<string>("AirplaneType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("AirportArrivalAirportId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AirportDepartureAirportId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AirportIdArrival")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AirportIdDeparture")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("ArrivalDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset>("DepatureDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("DurationInMins")
-                        .HasColumnType("int");
-
-                    b.HasKey("FlightId");
-
-                    b.HasIndex("AirportArrivalAirportId");
-
-                    b.HasIndex("AirportDepartureAirportId");
-
-                    b.ToTable("Flight");
-                });
 
             modelBuilder.Entity("Server.Models.Reservation", b =>
                 {
@@ -125,12 +59,10 @@ namespace Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatId"));
 
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
+                    b.Property<string>("FlightId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SeatId");
-
-                    b.HasIndex("FlightId");
 
                     b.ToTable("Seat");
                 });
@@ -190,21 +122,6 @@ namespace Server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Server.Models.Flight", b =>
-                {
-                    b.HasOne("Server.Models.Airport", "AirportArrival")
-                        .WithMany()
-                        .HasForeignKey("AirportArrivalAirportId");
-
-                    b.HasOne("Server.Models.Airport", "AirportDeparture")
-                        .WithMany()
-                        .HasForeignKey("AirportDepartureAirportId");
-
-                    b.Navigation("AirportArrival");
-
-                    b.Navigation("AirportDeparture");
-                });
-
             modelBuilder.Entity("Server.Models.Reservation", b =>
                 {
                     b.HasOne("Server.Models.Seat", "Seat")
@@ -222,17 +139,6 @@ namespace Server.Migrations
                     b.Navigation("Seat");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Server.Models.Seat", b =>
-                {
-                    b.HasOne("Server.Models.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Flight");
                 });
 
             modelBuilder.Entity("Server.Models.User", b =>

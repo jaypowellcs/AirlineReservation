@@ -6,5 +6,6 @@ namespace Server.Models
     {
         public DbSet<User> Users { get; set; }
 
+
     }
 }

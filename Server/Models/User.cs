@@ -1,8 +1,10 @@
-﻿namespace Server.Models
+﻿using Microsoft.Extensions.Hosting;
+
+namespace Server.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required string Address { get; set; }
@@ -14,6 +16,8 @@
         public bool EmailConfirmed { get; set; }
         public bool PasswordConfirmed { get; set; }
         public required string PhoneNumber { get; set; }
+
+        public ICollection<Reservation>? Reservations { get; }
 
     }
 }
