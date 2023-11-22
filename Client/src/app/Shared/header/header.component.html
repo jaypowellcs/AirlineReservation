@@ -1,0 +1,33 @@
+<nav class="flex items-center justify-between flex-wrap bg-red-500 p-6">
+    <div class="flex items-center flex-shrink-0 text-white mr-6">
+      <a routerLink="home" routerLinkActive="active"><img class="fill-current h-14 w-14 mr-6" src="../../../assets/skylightlogo.webp" alt="Skylight Logo"/></a>
+      <span class="font-semibold text-xl tracking-tight">Skylight Id</span>
+    </div>
+    <div class="block lg:hidden">
+      <button class="flex items-center px-3 py-2 border rounded text-black border-slate-950 hover:text-white hover:border-white"
+      type="button" (click)="toggleNavbar()"
+      >
+        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+      </button>
+    </div>
+    <div class="block mobile-menu w-full flex-grow lg:flex lg:items-center lg:w-auto"
+    [ngClass]="{'hidden': !showMenu, 'flex': showMenu}">
+      <div class="text-sm lg:flex-grow">
+        <a routerLink="home" routerLinkActive="active" href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-500 hover:text-white mr-4">
+          Home
+        </a>
+        <a routerLink="/identify" routerLinkActive="active" href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-500 hover:text-white mr-4">
+          Identify
+        </a>
+        <a routerLink="/skylightcal" routerLinkActive="active" href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 mr-4 text-grey-500 hover:text-white">
+          Skylight Calculator
+        </a>
+        <a routerLink="/contact" routerLinkActive="active" href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-500 hover:text-white">
+          Contact Us 
+        </a>
+      </div>
+  
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+  
